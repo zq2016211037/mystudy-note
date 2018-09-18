@@ -116,6 +116,20 @@ module.exports = {
 使用npm run build打包相关文件
 ```
 
+### 分离入口文件
+```
+	// entry:'./src/index.js',
+	entry:{
+		app:'./src/index.js',
+		print:'./src/print.js'
+	}
+	output:{
+		// filename:'bundle.js',
+		filename:'[name].bundle.js'				//相应生成文件app.bundle.js和print.bundle.js
+		path:path.resolve(__dirname,'dist')
+	},
+```
+
 ### 加载css
 ```
 1. 安装相应的loader
@@ -191,9 +205,20 @@ plugins:[
 ```
 ### clean-webpack-plugin(清理./dist文件)
 ```
-作用：由于过去的指南和代码示例遗留下来，导致我们的 /dist 文件夹相当杂乱。webpack 会生成文件，然后将这些文件放置在 /dist 文件夹中，但是 webpack 无法追踪到哪些文件是实际在项目中用到的。通常，在每次构建前清理 /dist 文件夹，是比较推荐的做法，因此只会生成用到的文件。
+1. 作用：由于过去的指南和代码示例遗留下来，导致我们的 /dist 文件夹相当杂乱。webpack 会生成文件，然后将这些文件放置在 /dist 文件夹中，但是 webpack 无法追踪到哪些文件是实际在项目中用到的。通常，在每次构建前清理 /dist 文件夹，是比较推荐的做法，因此只会生成用到的文件。  只保留重构之后的新生成文件。
 
 npm install clean-webpack-plugin
+
+2. 配置webpack.config.js
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+plugins:[
+	new CleanWebpackPlugin(['dist']),
+
+	new HtmlWebpackPlugin({
+		....
+	})
+]
 ```
 ### source-map
 ```
@@ -218,5 +243,134 @@ npm install clean-webpack-plugin
 ```
 
 ### 模块热替换
+```
+
+自动编译代码：实时重新加载，重新加载整个页面。
+模块热替换：避免重新加载整个页面。
+
+模块热替换是在自动编译的基础上进行的！
+```
 
 ### tree shaking
+
+```
+1. 作用：移除JavaScript上下文未引用部分。
+
+2. 将文件标记为无副作用：通过package.json sideEffects属性实现  找出未使用文件
+
+<!-- 无副作用，可删除 -->
+{
+	"name":"your-project",
+	"sideEffects":false
+}
+<!-- 将由副作用文件添加到side effect列表中 数组方式支持相关文件的相对路径、绝对路径和 glob 模式-->
+{
+	"name":"your-project",
+	"sideEffects":["",""]
+}
+「副作用」的定义是，在导入时会执行特殊行为的代码，而不是仅仅暴露一个 export 或多个 export。举例说明，例如 polyfill，它影响全局作用域，并且通常不提供 export。
+
+3. 还需要在 bundle 中删除它们。为此，我们将使用 -p(production) 这个 webpack 编译标记，来启用 uglifyjs 压缩插件。
+
+mode:'production'
+
+4. 总结
+为了学会使用 tree shaking，你必须……
+
+    使用 ES2015 模块语法（即 import 和 export）。
+    在项目 package.json 文件中，添加一个 "sideEffects" 入口。
+    引入一个能够删除未引用代码(dead code)的压缩工具(minifier)（例如 UglifyJSPlugin）。
+
+```
+
+### 生产环境构建(为每个环境构建独立的webpack)
+```
+1. webpack-merge: 通用配置
+webpack.config.js => webpack.common.js、webpack.prod.js、webpack.dev.js
+
+//webpack.common.js (入口、出口、HtmlWebpackPlugin)
++ const path = require('path');
++ const CleanWebpackPlugin = require('clean-webpack-plugin');
++ const HtmlWebpackPlugin = require('html-webpack-plugin');
++
++ module.exports = {
++   entry: {
++     app: './src/index.js'
++   },
++   plugins: [
++     new CleanWebpackPlugin(['dist']),
++     new HtmlWebpackPlugin({
++       title: 'Production'
++     })
++   ],
++   output: {
++     filename: '[name].bundle.js',
++     path: path.resolve(__dirname, 'dist')
++   }
++ };
+
+//webpack.prod.js(生产环境) 代码压缩
++ const merge = require('webpack-merge');
++ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
++ const common = require('./webpack.common.js');
++
++ module.exports = merge(common, {
++   plugins: [
++   devtool: 'source-map',
+-     new UglifyJSPlugin()
++     new UglifyJSPlugin({
++       sourceMap: true
++     })
++   ]
++ });
+
+
+//webpack.dev.js(开发环境)  inline-source-map webpack-dev-server
++ const merge = require('webpack-merge');
++ const common = require('./webpack.common.js');
++
++ module.exports = merge(common, {
++   devtool: 'inline-source-map',
++   devServer: {
++     contentBase: './dist'
++   }
++ });
+
+2. 修改package.json (我们把 scripts 重新指向到新配置。我们将 npm start 定义为开发环境脚本，并在其中使用 webpack-dev-server，将 npm run build 定义为生产环境脚本)
+    "scripts": {
+-     "start": "webpack-dev-server --open",
++     "start": "webpack-dev-server --open --config webpack.dev.js",
+-     "build": "webpack"
++     "build": "webpack --config webpack.prod.js"
+    },
+
+ 3. 指定生产环境
+
+```
+
+### 代码分离
+
+```
+有三种常用的代码分离方法：
+
+    入口起点：使用 entry 配置手动地分离代码。
+    防止重复：使用 CommonsChunkPlugin 去重和分离 chunk。
+    动态导入：通过模块的内联函数调用来分离代码。
+
+
+1. 入口起点：entry文件对应output为[name].bundle.js
+
+2. 防止重复：CommonsChunkPlugin 插件可以将公共的依赖模块提取到已有的入口 chunk 中，或者提取到一个新生成的 chunk。将重复模块去除。
+    plugins: [
+      new HTMLWebpackPlugin({
+        title: 'Code Splitting'
+-     })
++     }),
++     new webpack.optimize.CommonsChunkPlugin({
++       name: 'common' // 指定公共 bundle 的名称。
++     })
+    ],
+
+3. 动态导入
+
+```
