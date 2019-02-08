@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>component 组件</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h2>component 组件</h2>
+	<div id="app">
+		<Zqian></Zqian>
+	</div>
+	<div id="app2">
+		<Zqian></Zqian>
+	</div>
+	<div id="app3">
+		<Zq></Zq>
+	</div>
+	<script type="text/javascript">
+		Vue.component('Zqian',{
+			template:`<div style='color:red'>全局模板,可以在其他作用域使用</div>`,
+		})
+
+		var app = new Vue({
+			el:'#app',
+			data:{
+
+			}
+		})
+
+		var app2 = new Vue({
+			el:'#app2',
+			data:{}
+		})
+
+		var app3 = new Vue({
+			el:'#app3',
+			components:{
+				'zq':{
+					template:`<h2 style="color:blue">局部注册组件</h2>`
+				}
+			}
+		})
+	</script>
+</body>
+</html>

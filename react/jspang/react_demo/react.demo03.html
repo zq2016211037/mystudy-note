@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>jsx初识</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" />
+    <script src='http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js'></script>
+    <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    
+    <div id="reactContainer"></div>
+    <script src='./common/react.js'></script>
+    <script src='./common/react-dom.js'></script>    
+    
+    <script type='text/babel'>
+        let arr = ['world','zqian','郑茜'];
+        var HelloComponent = React.createClass({
+            render:function(){      //render后面一定要有<div>，不能换行
+                return <div>
+                        {
+                            arr.map(function(item){
+                                return  <div key={item}> hello, {item}</div>
+                            })
+                        }
+                    </div>
+            }
+        });
+
+        ReactDOM.render(<HelloComponent/>,document.getElementById('reactContainer'));
+    </script> 
+
+</body>
+</html>

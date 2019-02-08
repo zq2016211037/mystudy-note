@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>事件响应、绑定复用</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" />
+    <script src='http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js'></script>
+</head>
+<body>
+    
+    <div id="reactContainer"></div>
+    <script src='../common/react.js'></script>
+    <script src='../common/react-dom.js'></script>    
+    
+    <script type='text/babel'>
+        var  FormComponent = React.createClass({
+            getInitialState:function(){
+                return ({
+                    userName:'',
+                    checked:false,
+                    gender:'man'
+                })
+            },
+            changeHandle:function(name,event){
+                var newState = {};
+                newState[name] = name=='check' ? event.target.checked :event.target.value;
+                this.setState(newState);
+                console.log(newState);
+            },
+            submitHandle:function(e){
+                e.preventDefault();
+                var is = this.state.checked ? '是' :"否";
+                var gender = this.state.gender == 'man' ?'帅哥' : '美女';
+                alert(this.state.userName + is + gender);
+
+            },
+            render:function(){
+                return (
+                <form onSubmit={this.submitHandle}>
+                    <label htmlFor='userName'>用户名</label>
+                    <input type='text' name='userName' onChange={this.changeHandle.bind(this,'userName')} value={this.state.userName}/>
+                    <br/>
+                    <label htmlFor='check'>是或否</label>
+                    <input type='checkbox' name='check' onChange={this.changeHandle.bind(this,'check')} checked={this.state.checked}/>
+                    <br/>
+                    <label htmlFor='gender'>请选择您的性别</label>
+                    <select value={this.state.gender} onChange={this.changeHandle.bind(this,'gender')}>
+                        <option>man</option>
+                        <option>woman</option>
+                    </select>
+                    <br/>
+                    <input type='submit' value='submit'/>
+                </form>
+                )
+            }
+        });
+        //  var data = 123;
+        ReactDOM.render(
+            <FormComponent/>,document.getElementById("reactContainer"));
+    </script>
+
+</body>
+</html>

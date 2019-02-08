@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>compute option方法选项</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h2>compute option选项</h2>
+	<hr>
+	<div id="app">
+		<p>{{a}}</p>
+		<button @click="add(2,$event)">add</button><br>
+		<btn @click.native="add(5)"></btn>
+	</div>
+		<button onclick="app.add(3)">外部调用</button>
+	<script type="text/javascript">
+		var btn = {
+			template:`<button>组件add</button>`
+		}
+		var app= new Vue({
+			el:'#app',
+			data:{
+				a:1
+			},
+			components:{
+			'btn':btn
+			},
+			//methods方法用法
+			// methods:{
+			// 	add:function(){
+			// 		this.a++;
+			// 	}
+			// }
+
+			//methods方法接受参数
+			methods:{
+				add:function(num){
+					if(num){
+						this.a += num;
+					}else{
+						this.a++;
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>

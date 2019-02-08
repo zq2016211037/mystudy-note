@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>this.props.children</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" />
+    <script src='http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js'></script>
+    <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    
+    <div id="reactContainer"></div>
+    <script src='./common/react.js'></script>
+    <script src='./common/react-dom.js'></script>    
+    
+    <script type='text/babel'>
+        var  NodeList = React.createClass({
+            getInitialState:function(){
+                 return {opacity:1.0}
+            },
+
+            render:function(){
+                return (
+                    <ul>
+                        {
+                            React.Children.map(this.props.children,function(child){
+                                return(
+                                    <li>{child}</li>
+                                )
+                            })
+                        }
+                    </ul>
+                )
+            }
+        });
+
+        ReactDOM.render(
+            <NodeList>
+                <span>zqian</span>
+                <span>☆</span>
+                <span>郑茜</span>
+                
+            </NodeList>,document.getElementById("reactContainer"));
+    </script>
+
+</body>
+</html>

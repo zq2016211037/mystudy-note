@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>example demo</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	<h1>example demo</h1>
+	<hr>
+	<div id="app">
+		<panda>
+			<span slot="blogURL">{{pandaData.blogURL}}</span>
+			<span slot="webName">{{pandaData.webName}}</span>
+			<span slot="skills">{{pandaData.skills}}</span>
+		</panda>
+	</div>
+	<template id="tmp">
+		<div>
+			<p>博客地址：<slot name="blogURL"></slot></p>
+			<p>网名：<slot name="webName"></slot></p>
+			<p>技术类型：<slot name="skills"></slot></p>
+		</div>
+	</template>
+	<script type="text/javascript">
+		var panda = {
+			template:"#tmp"
+		}
+		var app = new Vue({
+			el:"#app",
+			data:{
+				pandaData:{
+				blogURL:'http://zq2016211037.github.io',
+				webName:'Zqian',
+				skills:'web'
+				}
+			},
+			components:{
+				'panda':panda
+			}
+			
+		})
+		
+	</script>
+</body>
+</html>

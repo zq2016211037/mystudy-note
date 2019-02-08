@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>propTypes属性验证  getDefaultProps  设置默认属性</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" />
+    <script src='http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js'></script>
+    <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    
+    <div id="reactContainer"></div>
+    <script src='./common/react.js'></script>
+    <script src='./common/react-dom.js'></script>    
+    
+    <script type='text/babel'>
+        var  MyTitle = React.createClass({
+            propTypes:{
+                title: React.PropTypes.string.isRequired
+            },
+            getDefaultProps:function(){
+                return {title:'默认标题'}
+            },
+            render:function(){
+                return (
+                   <p>hello {this.props.title}</p>
+                )
+            }
+        });
+        //  var data = 123;
+        ReactDOM.render(
+           
+            <MyTitle>             
+            </MyTitle>,document.getElementById("reactContainer"));
+    </script>
+
+</body>
+</html>

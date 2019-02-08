@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Component组件的props属性设置</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<panda here="China" age="18" :live-place="live"></panda>
+	</div>
+
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				live:'SiChuan'
+			},
+			components:{
+				'panda':{
+					template:`<h2>those pandas are from {{here}},they are {{age}} and they live in {{livePlace}} province.</h2>`,
+					props:['here','age','livePlace']
+				}
+			}
+		})
+	</script>
+</body>
+</html>

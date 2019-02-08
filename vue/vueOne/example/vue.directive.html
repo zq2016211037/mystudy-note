@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue.directive 自定义全局API</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,inital-scale=1">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h1>vue.directive</h1>
+	<hr>
+	<div id="app">
+		<div>{{num}}</div>
+		<div v-try="color">{{num}}</div>
+		<div v-tryagain="color">{{num}}</div>
+		<p><button @click="add">add</button></p>
+
+		<p>
+			<button onclick="unbind()">解绑</button>
+		</p>
+	</div>
+
+	<script type="text/javascript">
+		//解绑
+		function unbind(){
+			app.$destroy();
+		}
+
+		//自定义指令
+		Vue.directive("try",function(el,binding,vnode){
+			el.style='color:'+binding.value;
+			// console.log(el);
+			// console.log(binding);
+			// console.log(binding.name);
+			// console.log(binding.expression);
+			// console.log(binding.value);
+		});
+
+		//自定义指令中的生命周期
+		Vue.directive("tryagain",{
+			bind:function(el,binding,vnode){//被绑定
+				 el.style='color:'+binding.value;
+			     console.log('1 - bind');
+			},
+			inserted:function(){//绑定到节点
+			      console.log('2 - inserted');
+			},
+			update:function(){//组件更新
+			      console.log('3 - update');
+			},
+			componentUpdated:function(){//组件更新完成
+			      console.log('4 - componentUpdated');
+			},
+			unbind:function(){//解绑
+			      console.log('5 - unbind');
+			}
+		})
+		var app = new Vue({
+			el:"#app",
+			data:{
+				num:10,
+				color:'red'
+			},
+			methods:{
+				add:function(){
+					this.num++;
+				}
+			}
+		})
+	</script>
+</body>
+</html>

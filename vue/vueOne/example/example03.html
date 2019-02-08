@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>example demo</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	<h1>example demo</h1>
+	<hr>
+	<div id="app">
+		{{num}}
+		<p><button @click="add">add</button></p>
+	</div>
+	<p><button onclick="reduce()">reduce</button></p>
+	<p><button onclick="reduceOnce()">reduceOnce</button></p>
+	<p><button onclick="off()">off</button></p>
+	<script type="text/javascript">
+		var app = new Vue({
+			el:"#app",
+			data:{
+				num:1
+			},
+			methods:{
+				add:function(){
+					this.num++;
+				}	
+			}
+		})
+		//$on在外部添加事件
+		app.$on('reduce',function(){
+			this.num--;
+		})
+
+		function reduce(){
+			app.$emit('reduce');
+		}
+		//$once执行一次事件
+		app.$once('reduceOnce',function(){
+			this.num--;
+		})
+		function reduceOnce(){
+			app.$emit('reduceOnce');
+		}
+		//$off 执行关闭事件
+		function off(){
+			app.$off('reduce');
+		}
+	</script>
+</body>
+</html>

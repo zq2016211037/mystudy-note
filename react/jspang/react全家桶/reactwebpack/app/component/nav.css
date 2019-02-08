@@ -1,0 +1,7 @@
+.link{
+    color:pink;
+}
+.active{
+    background: pink;
+    color: #fff;
+}

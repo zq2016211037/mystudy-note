@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vue Component父子组件关系</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h2>component 父子组件</h2>
+	<hr>
+
+	<div id="app">
+		<Zqian></Zqian>
+	</div>
+
+
+	<script type="text/javascript">
+		var son = {
+			template:`<span>内嵌son组件</span>`
+		}
+		var Zqian = {
+			template:`<div><h2 style="color:blue">构造器外部构造</h2><br>
+			<son></son></div>`,
+			components:{
+				'son':son
+			}
+		}
+		var app = new Vue({
+			el:'#app',
+			components:{
+				'Zqian':Zqian
+			}	
+		})
+	</script>
+</body>
+</html>

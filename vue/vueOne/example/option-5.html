@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>compute option方法选项</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h2>compute option选项</h2>
+	<hr>
+	<div id="app">
+		{{num}}
+		<p><button @click="add">add</button></p>
+	</div>
+		
+	<script type="text/javascript">
+		Vue.mixin({
+			updated:function(){
+				console.log("我是全局的混入")
+			}
+		});
+		var addConsole = {
+			updated:function(){
+				console.log('数据发生变化,变成'+this.num+'.');
+			}
+		}
+		var app = new Vue({
+			el:'#app',
+			data:{
+				num:1
+			},
+			methods:{
+				add:function(){
+					this.num ++;
+				}
+			},
+			updated:function(){
+				console.log('我是原生的updated')
+			},
+			mixins:[addConsole]
+			
+		})
+	</script>
+</body>
+</html>

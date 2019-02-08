@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue.set 实例</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h1>Vue.set</h1>
+	<hr>
+	<div id="app">{{count}}</div>
+	<!-- 不在全局作用域，使用Vue-set -->
+	<!-- vue无法监测到利用下表改变数组,可以使用Vue-set -->
+	<p><button onclick="add()">add</button></p>
+
+	<script type="text/javascript">
+		function add(){
+			Vue.set(outData,'count',2);
+			// app.count++;
+			// outData.count++;
+		}
+		var outData = {
+			count:1,
+			goods:'car'
+		}
+		var app = new Vue({
+			el:"#app",
+			data:outData
+		})
+	</script>
+</body>
+</html>

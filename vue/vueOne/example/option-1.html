@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>propsData 全局扩展的数据传递</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h2>propsData 全局扩展的数据传递</h2>
+	<hr>
+	<div id="app">
+		<header></header>
+	</div>
+
+	<script type="text/javascript">
+		var headerExtend = Vue.extend({
+			template:`<p style="color:red">{{message}}-{{a}}-{{b}}</p>`,
+			data:function(){
+				return {
+					message:'hello vue'
+				}
+			},
+			props:['a','b']
+		})
+
+		new headerExtend({propsData:{a:1,b:2}}).$mount('header');
+	</script>
+</body>
+</html>

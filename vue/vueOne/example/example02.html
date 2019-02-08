@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>example method Demo</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+	<h1>example mothod demo</h1>
+	<hr>
+	<div id="app">{{message}}</div>
+	<p><button onclick="destroy()">卸载</button></p>
+	<p><button onclick="reload()">刷新</button></p>
+	<p><button onclick="tick()">修改</button></p>
+	<script type="text/javascript">
+		var panda = Vue.extend({
+			template:`<p>{{message}}</p>`,
+			data:function(){
+				return {
+					message:'hello vue'
+				}
+			},
+			mounted:function(){
+				console.log('mounted 被创建');
+			},
+			updated:function(){
+				console.log('updated');
+			},
+			destroyed:function(){
+				console.log('destroy销魂之后');
+			}
+		})
+		var pd = new panda().$mount('#app');
+		function destroy(){
+			pd.$destroy();
+		}
+		function reload(){
+			pd.$forceUpdate();
+		}
+		function tick(){
+			pd.message = 'update message info';
+			pd.$nextTick(function(){
+				console.log('数据被修改')
+			})
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>获取真实DOM节点</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" />
+    <script src='http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js'></script>
+    <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    
+    <div id="reactContainer"></div>
+    <script src='./common/react.js'></script>
+    <script src='./common/react-dom.js'></script>    
+    
+    <script type='text/babel'>
+        var  Focus = React.createClass({
+            handleFocus:function(){
+                this.refs.myTextBox.focus();
+            },
+            render:function(){
+                return (
+                <div>
+                  <input type="text" ref='myTextBox'/>
+                  <button onClick={this.handleFocus}>获取文本框焦点</button>
+                </div>
+                )
+            }
+        });
+        //  var data = 123;
+        ReactDOM.render(
+            <Focus></Focus>,document.getElementById("reactContainer"));
+    </script>
+
+</body>
+</html>

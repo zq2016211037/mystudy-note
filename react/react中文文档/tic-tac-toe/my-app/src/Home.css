@@ -1,0 +1,58 @@
+#root{
+	background: url(http://pic1.win4000.com/wallpaper/7/58b52e57d65ae.jpg);
+	height: 1366px;
+}
+.Home{
+	position: fixed;
+	margin: 0 auto;
+	width: 50%;
+	height: 40%;
+	left: 50%;
+	top: 50%;
+	margin-left: -25%;
+	margin-top: -20%;
+	background: rgba(0,0,0,.15);
+	border-radius: 10px;
+	box-shadow: 1px 1px 1px 1px #333;
+}
+
+header{
+	text-align: center;
+	height: 20%;
+	overflow: hidden;
+	font-weight: normal;
+	color: #fff;
+}
+p{
+	font-size: 16px;
+	line-height: 24px;
+}
+p:nth-child(2){
+	font-size: 14px;
+}
+.content{
+	height: 55%;
+}
+.category{
+	width: 80%;
+	margin: 20px auto;
+	line-height: 24px;
+	background: rgba(0,0,0,.3);
+	border-radius: 5px;
+	color: #fff;
+}
+.category:hover{
+	background: #fff;
+	color: #333;
+	text-decoration: underline;
+	cursor: pointer;
+}
+footer{
+	text-decoration: none;
+	text-align: right;
+	padding-right: 10%;
+	color: #fff;
+}
+
+
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>template模板制作</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h1>template制作模板</h1>
+	<hr>
+	<div id="app1">
+	</div>
+	<div id="app2">
+	</div>
+	<div id="app3">
+	</div>
+	<template id="demo2">
+		<h2 style="color:blue">使用标签制作模板</h2>
+	</template>
+
+	<script type="x-template" id="demo3">
+		<h2 style='color:green'>template  的script里面的模板</h2>
+	</script>
+
+
+
+	<script type="text/javascript">
+		//方法一：选项模板
+		var app = new Vue({
+			el:'#app1',
+			data:{
+				message:'hello world'	
+			},
+			template:`<h2 style="color:red">使用template制作模板,方法一：选项模板</h2>`
+
+		})
+
+		//方法二：标签模板
+		var app1 = new Vue({
+			el:'#app2',
+			data:{
+				message:'hello world'
+			},
+			template:'#demo2'
+		})
+
+		var app2 = new Vue({
+			el:'#app3',
+			data:{
+				message:'hello world'
+			},
+			template:'#demo3'
+		})
+	</script>
+	</body>
+</html>

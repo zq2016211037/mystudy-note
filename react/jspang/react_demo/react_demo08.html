@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>props state  组件闪烁小实例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" />
+    <script src='http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js'></script>
+    <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    
+    <div id="reactContainer"></div>
+    <script src='./common/react.js'></script>
+    <script src='./common/react-dom.js'></script>    
+    
+    <script type='text/babel'>
+        var  BingBing = React.createClass({
+            getInitialState:function(){
+                 return {opacity:1.0}
+            },
+            componentDidMount:function(){
+                setInterval(function(){
+                    var opacity = this.state.opacity;
+                    opacity -=0.05;
+                    if(opacity < 0.1){
+                        opacity = 1.0;
+                    }
+                    this.setState({opacity:opacity});
+                }.bind(this),100);
+            },
+            render:function(){
+                return (
+                    <h2 style={{opacity:this.state.opacity}}>hello {this.props.name}</h2>
+                )
+            }
+        });
+
+        ReactDOM.render(<BingBing name='zqian'/>,document.getElementById("reactContainer"));
+    </script>
+
+</body>
+</html>

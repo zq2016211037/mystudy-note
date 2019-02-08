@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>生命周期</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" />
+    <script src='http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js'></script>
+    <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    
+    <div id="reactContainer"></div>
+    <script src='./common/react.js'></script>
+    <script src='./common/react-dom.js'></script>    
+    
+    <script type='text/babel'>
+        var  AddCount = React.createClass({
+            getInitialState:function(){
+                console.log('....  getInitialState');
+                return {count:1}
+            },
+            componentWillMount:function(){
+                console.log('1..........  将挂起')
+            },
+            componentDidMount:function(){
+                console.log('2..........  已挂起')
+            },
+            componentWillUpate:function(){
+                console.log('3..........  将更新')
+            },
+            componentDidUpdate:function(){
+                console.log('4..........  已更新')
+            },
+            handleClick:function(event){
+                this.setState({count:this.state.count+1})
+            },
+            render:function(){
+                return (
+                    <p>
+                        {this.state.count} <br/>
+                        <button onClick={this.handleClick}>count++</button>
+                    </p>
+                )
+            }
+        });
+
+        ReactDOM.render(<AddCount/>,document.getElementById("reactContainer"));
+    </script>
+
+</body>
+</html>

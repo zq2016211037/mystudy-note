@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>compute option方法选项</title>
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+	<h2>compute option选项</h2>
+	<hr>
+	<div id="app">
+		<p>今日温度：{{temperature}}</p>
+		<p>适合穿衣：{{clothes}}</p>
+		<p><button @click="add">升高温度</button></p>
+		<p><button @click="cut">降低温度</button></p>
+	</div>
+		
+	<script type="text/javascript">
+		var clothes_Array = ['短袖/T恤','夹克/牛仔','羽绒服/棉服'];
+		var app = new Vue({
+			el:'#app',
+			data:{
+				temperature:13,
+				clothes:'夹克、牛仔'
+			},
+			methods:{
+				add:function(){
+					this.temperature += 5;
+				},
+				cut:function(){
+					this.temperature -= 5;
+				}
+			},
+			//构造器里面的watch监控
+			// watch:{
+			// 	temperature:function(oldVal,newVal){
+			// 		if(newVal>26){
+			// 			this.clothes = clothes_Array[0]
+			// 		}else if(newVal>0&&newVal<26){
+			// 			this.clothes = clothes_Array[1]
+			// 		}else{
+			// 			this.clothes = clothes_Array[2]
+			// 		}
+
+			// 	}
+			// }
+		})
+
+		//在实例属性中完成watch监控
+		app.$watch('temperature',function(oldVal,newVal){
+			if(newVal>26){
+						this.clothes = clothes_Array[0]
+					}else if(newVal>0&&newVal<26){
+						this.clothes = clothes_Array[1]
+					}else{
+						this.clothes = clothes_Array[2]
+					}
+		})
+	</script>
+</body>
+</html>
